@@ -19,7 +19,7 @@ That backdrop is pushing some pharma companies to ask a more fundamental questio
 
 **The data you most want AI to analyze is the data you can least afford to expose.** Pre-IND compound structures, unpublished mechanism-of-action data, clinical endpoint designs, manufacturing process parameters — this is the intellectual property that underpins your pipeline. Sending it to a cloud LLM means relinquishing physical control. Even with contractual protections, once data hits a third-party API, you cannot fully guarantee how it's stored, cached, or used for model improvement. For organizations where a single patent filing depends on maintaining trade secret protection, that trade-off can be difficult to accept.
 
-**Regulated workflows demand validated, auditable systems.** AI isn't exempt from GxP. If a scientist uses an LLM to draft a clinical study report section, summarize adverse events, or review CMC documentation, the tool that produced that output falls under the same scrutiny as any computerized system in a regulated environment. [FDA 21 CFR Part 11](https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-11) requires electronic records with audit trails, access controls, and attributable authorship. [EMA Annex 11](https://health.ec.europa.eu/system/files/2016-11/annex11_01-2011_en_0.pdf) imposes equivalent requirements. A SaaS chatbot that can't tell you who asked what, when, or what sources informed the answer raises questions under those frameworks.
+**Regulated workflows demand validated, auditable systems.** If a scientist uses an LLM to draft a clinical study report section, summarize adverse events, or review CMC documentation, the tool that produced that output falls under the same scrutiny as any computerized system in a regulated environment. Regulators expect electronic records with audit trails, access controls, and attributable authorship. A SaaS chatbot that can't tell you who asked what, when, or what sources informed the answer raises questions under those expectations.
 
 **Scientific hallucinations compound through the pipeline.** When an AI fabricates a drug-drug interaction, misattributes a clinical outcome to the wrong study arm, or cites a retracted paper, the consequences aren't just embarrassing — they can contaminate safety assessments, mislead regulatory reviewers, and delay or derail programs worth hundreds of millions. Scientists need every AI-generated claim traceable to a source document they can verify themselves.
 
@@ -41,7 +41,7 @@ If a pharma company were to explore self-hosted AI, what capabilities would matt
 
 - **Group-based access control.** The ability to map role-based permissions to functional groups (R&D, Clinical, Regulatory, Pharmacovigilance, Manufacturing, Medical Affairs), restrict administrators from viewing certain conversations, and control model access, document access, and feature access per group.
 
-- **Configurable audit and retention controls.** Conversation logging, configurable retention, SSO integration, and restrictions on chat deletion that can support an organization's GxP compliance and audit requirements — including the kind of electronic records expected under [21 CFR Part 11](https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-11) and [Annex 11](https://health.ec.europa.eu/system/files/2016-11/annex11_01-2011_en_0.pdf).
+- **Configurable audit and retention controls.** Conversation logging, configurable retention, SSO integration, and restrictions on chat deletion that can support an organization's compliance and audit requirements — including the kind of electronic records regulators expect in validated environments.
 
 - **Computational capabilities accessible through natural language.** The ability for scientists to run real code — Python, R, Julia — through conversational prompts, in sandboxed environments on internal infrastructure, without requiring programming expertise or IT tickets. This is what bridges the gap between domain scientists and the computational workflows they need.
 
@@ -95,7 +95,7 @@ Groups can synchronize with your identity provider (Okta, Azure AD, Ping Identit
 
 *This section is a reference for your IT or infrastructure team. If you're evaluating at a strategic level, the key takeaway is simple: a self-hosted AI platform can run on existing infrastructure (VMware, Azure, AWS, or bare metal), scale with the organization, and be deployed with minimal external dependencies.*
 
-For large pharma organizations (500–10,000+ employees), a production deployment typically requires high availability, data isolation, and GxP-ready infrastructure. Here's a reference architecture using Open WebUI — for full deployment instructions, see the **[Technical Setup Guide](setup.md)**.
+For large pharma organizations (500–10,000+ employees), a production deployment typically requires high availability, data isolation, and infrastructure that can support regulatory requirements. Here's a reference architecture using Open WebUI — for full deployment instructions, see the **[Technical Setup Guide](setup.md)**.
 
 ```mermaid
 flowchart TB
@@ -154,7 +154,7 @@ Self-hosting AI is not trivial. Before committing, organizations should consider
 
 - **Infrastructure costs.** Open WebUI itself is free, but GPU servers, storage, and networking are not. A single-department pilot may run on one GPU server; an organization-wide deployment involves dedicated compute and storage.
 - **Governance design.** Who approves AI use cases? How are outputs reviewed? What's the policy for AI-assisted work product in regulatory submissions? These questions matter more than the technology.
-- **Validation and testing.** Any AI deployment in a GxP environment should go through computerized system validation (CSV), security review, and integration testing before production use. This is typically a multi-week program.
+- **Validation and testing.** Any AI deployment in a regulated environment should go through appropriate validation, security review, and integration testing before production use. This is typically a multi-week program.
 - **Ongoing maintenance.** Model updates, security patches, user support, and knowledge base curation are ongoing responsibilities.
 
 For organizations that want to explore the technical details, the complete Docker Compose stack (including Open Terminal configuration), security hardening checklist, RBAC configuration guide, and backup strategy are in our companion guide:
