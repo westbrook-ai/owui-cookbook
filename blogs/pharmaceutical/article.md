@@ -121,12 +121,13 @@ Open WebUI includes a group-based access control system. The table below shows o
 
 | Functional Group | AI Capabilities | Knowledge Bases | Special Permissions |
 |---|---|---|---|
-| **R&D / Discovery** | Full | Compound libraries, assay protocols, literature databases | Open Terminal *(SAR analysis, molecular modeling, visualization)*, code interpreter |
-| **Clinical Operations** | Full | Study protocols, CRF templates, monitoring plan libraries | Open Terminal *(survival analysis, enrollment dashboards)*, web search enabled |
-| **Regulatory Affairs** | Full | eCTD templates, FDA/EMA guidance, precedent correspondence | Document extraction *(structured data from regulatory letters)* |
-| **Pharmacovigilance** | Advanced analysis only | MedDRA dictionaries, CIOMS forms, signal detection SOPs | RAG-only mode *(responses grounded in validated source documents)* |
+| **Biostatistics** | Full | Analysis datasets, statistical analysis plans, CDISC standards libraries | Open Terminal *(survival analysis, enrollment dashboards, forest plots)*, code interpreter |
+| **Clinical Development** | Full | Study protocols, investigator brochures, CRF templates, monitoring plan libraries | Document extraction *(structured data from regulatory letters)*, web search enabled |
 | **Manufacturing / CMC** | Full | Batch records, process validation reports, equipment SOPs | Open Terminal *(batch trend analysis, process parameter visualization)*, file upload |
 | **Medical Affairs** | Full | Product monographs, congress abstracts, KOL slide decks | Web search enabled |
+| **Pharmacovigilance** | Advanced analysis only | MedDRA dictionaries, CIOMS forms, signal detection SOPs | RAG-only mode *(responses grounded in validated source documents)* |
+| **R&D / Discovery** | Full | Compound libraries, assay protocols, literature databases | Open Terminal *(SAR analysis, molecular modeling, visualization)*, code interpreter |
+| **Regulatory Affairs** | Full | eCTD templates, FDA/EMA guidance, precedent correspondence | Document extraction *(structured data from regulatory letters)* |
 | **Support Staff** | Basic tasks only | Company policies, HR procedures, training materials | No file upload, no web search, no terminal access |
 
 Groups can synchronize with your identity provider (Okta, Azure AD, Ping Identity) via OAuth, so functional group membership can stay aligned with your organization's directory.
