@@ -77,7 +77,7 @@ She switches to an Open Terminal session, attaches the consolidated Verixanib ef
 
 The AI reads the dataset, generates the four-panel figure, and returns it in the chat. She reviews the output, asks for a color adjustment to match the company's slide template, and downloads the final figure — all within the same conversation, all on the same infrastructure where the source CSRs live.
 
-![Open Terminal generating trial data trend visualizations from an attached dataset](images/trial-visuals.gif)
+![Open Terminal generating trial data trend visualizations from an attached dataset](images/trial_visuals.gif)
 
 #### Accelerating Drug Discovery with SAR Visualization
 
