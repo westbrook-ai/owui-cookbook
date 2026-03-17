@@ -31,9 +31,9 @@ These challenges share a common root: some pharma companies are asking whether A
 
 ## What Self-Hosted AI Would Actually Require
 
-There's no shortage of "AI for life sciences" products on the market — many are polished, well-funded, and quick to deploy. The strategic question is control: where data is processed, who can access it, and how confidently you can demonstrate that to regulators, auditors, and partners. For low-sensitivity use cases like drafting internal emails or summarizing public literature, shared infrastructure may be a reasonable trade-off. For anything touching your pipeline, your patients, or your regulatory submissions, tighter control is often worth evaluating.
+Every major cloud provider and a growing roster of startups now offer some flavor of "AI for life sciences." Most follow the same playbook: upload your data, call their API, get results. That works when the stakes are low — summarizing published literature, drafting internal comms, triaging help-desk tickets. But the moment the work touches a compound patent strategy, an IND-enabling dataset, or a safety signal trending toward a regulatory action, the calculus shifts. The question stops being *"can we use AI?"* and becomes *"can we prove — to an inspector, an auditor, a partner in a licensing negotiation — exactly where this output came from, who saw the underlying data, and that none of it left our control?"*
 
-If a pharma company were to explore self-hosted AI, what capabilities would matter? Based on the concerns above, the requirements tend to cluster around five areas:
+That's why the conversation in pharma has moved past feature checklists. When organizations start evaluating self-hosted AI seriously, the requirements tend to cluster around five areas:
 
 - **Data locality.** The ability to run AI entirely on company-controlled infrastructure — on-premise data center, validated private cloud, or air-gapped environment. With the right configuration, this can reduce third-party data exposure, limit model training risk, and avoid external API calls for inference.
 
@@ -53,9 +53,11 @@ These aren't unique to any one product — they're the criteria that organizatio
 
 [Open WebUI](https://docs.openwebui.com/) is a general-purpose, open-source AI platform that can be self-hosted. It's one example of a platform that can be configured to address the requirements above — organizations should evaluate whether and how its capabilities fit their own compliance and governance requirements.
 
-### Illustrative Example
+### Illustrative Examples
 
-> **Note:** The following scenario is illustrative and does not represent a validated or endorsed workflow. Organizations must design, test, and validate their own AI workflows according to their regulatory and governance requirements.
+> **Note:** The following scenarios are illustrative and do not represent validated or endorsed workflows. Organizations must design, test, and validate their own AI workflows according to their regulatory and governance requirements.
+
+#### Querying Internal Documents with Source Citations
 
 A regulatory affairs scientist is preparing a Module 2.7 clinical summary for an eCTD submission. She opens Open WebUI, configured with the company's internal document library, and queries: *"Summarize the primary efficacy endpoints from our Phase III trials for compound X, including the statistical methods used."* The response can draw from internal clinical study reports, cite each by document name with relevance scores, and structure the summary in a format consistent with ICH E3 guidelines. She clicks each citation to verify it against the source PDF. The conversation can be logged under her SSO identity for search and audit workflows.
 
@@ -63,11 +65,54 @@ Two weeks later, during an FDA pre-submission meeting, a reviewer asks how a spe
 
 ![Open WebUI chat interface with document citations and relevance scores](images/chat_citations.png)
 
-Open WebUI also includes [Open Terminal](https://docs.openwebui.com/features/extensibility/open-terminal), which provides a sandboxed computing environment accessible through natural language. A scientist can attach a dataset from an Open WebUI Knowledge collection and describe the analysis they need — for example: *"Create a Trial Data: Main Trends and Patterns visual from the provided trial data that includes a line graph for mean efficacy score over time by dose, a bar graph for average improvement by day 60, a response status by dose bar chart, and an adverse event rate by dose line chart."* The AI executes real Python code with scientific libraries inside an isolated Docker container on the organization's infrastructure and returns visualizations directly in the chat.
+#### Visualizing Clinical Trial Data with Open Terminal
 
-![Open Terminal generating trial data trend visualizations from an attached dataset](images/trial-data-trends.png)
+The example above shows how Open WebUI can ground responses in source documents — the scientist asks a question, and the AI pulls from the firm's CSRs to produce a cited summary. But a text summary is only half the story. When that same scientist needs to present the Verixanib efficacy data to a cross-functional team ahead of a data monitoring committee meeting, she needs visuals — and she needs them built from the same underlying trial data, not mocked up in PowerPoint.
 
-This is what Genentech's John Marioni describes as a "lab-in-the-loop": the model predicts, the scientist validates, and both improve in a [virtuous cycle](https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/how-pharma-is-rewriting-the-ai-playbook-perspectives-from-industry-leaders). A medicinal chemist could just as easily upload a compound library and ask for a structure-activity relationship analysis using RDKit. No data leaves the network. No IT ticket required.
+[Open Terminal](https://docs.openwebui.com/features/extensibility/open-terminal) is a sandboxed computing environment built into Open WebUI. Instead of writing code, a scientist provides the relevant data, and describes an analysis in plain language. The AI writes and executes code inside an isolated Docker container on the organization's infrastructure — complete with scientific libraries — and returns the results directly in the chat. The file browser lets scientists upload datasets, preview outputs, and download finished artifacts without ever leaving the interface.
+
+She switches to an Open Terminal session, attaches the consolidated Verixanib efficacy dataset from the company's Knowledge collection — the same data that underpins the three CSRs she just queried — and types:
+
+*"From this Verixanib Phase III trial data, create a four-panel efficacy overview: (1) a line graph showing ACR20 response rate over time by treatment arm across all three studies, (2) a grouped bar chart comparing ACR20, ACR50, and ACR70 response rates at the primary endpoint for each treatment arm in VRX-301, (3) a line graph of DAS28-CRP change from baseline over time for VRX-302 treatment arms including adalimumab, and (4) a grouped bar chart of Week 24 HAQ-DI improvement across all monotherapy arms from VRX-303."*
+
+The AI reads the dataset, generates the four-panel figure, and returns it in the chat. She reviews the output, asks for a color adjustment to match the company's slide template, and downloads the final figure — all within the same conversation, all on the same infrastructure where the source CSRs live.
+
+![Open Terminal generating trial data trend visualizations from an attached dataset](images/trial-visuals.gif)
+
+#### Accelerating Drug Discovery with SAR Visualization
+
+A medicinal chemist is deep in lead optimization. His team has synthesized 200+ analogs of a kinase inhibitor scaffold, and the SAR is getting complex — potency cliffs appear when certain R-groups are swapped, but nobody has mapped the full landscape systematically. He drags a compound library CSV (SMILES strings, IC50 values, selectivity ratios, and physicochemical descriptors) into the Open Terminal file browser and types:
+
+*"Using RDKit: compute Morgan fingerprints for these compounds, cluster them by Tanimoto similarity, and generate a heatmap showing the relationship between structural clusters and pIC50. Annotate the cluster with the best selectivity ratio. Add a second panel showing a matched molecular pair analysis for substitutions at the R1 position — plot the ΔpIC50 for each transformation as a horizontal bar chart, sorted by magnitude."*
+
+The AI installs RDKit and scikit-learn, calculates fingerprints, runs the clustering, identifies the matched pairs, and produces a two-panel figure: the SAR heatmap on top, the matched molecular pair bar chart below. The chemist spots a pattern — a fluorine-to-chlorine swap at R1 consistently boosts potency by ~0.5 log units without killing selectivity — and sends the figure to the project team with a follow-up synthesis proposal.
+
+This is what Genentech's John Marioni describes as a "lab-in-the-loop": the model predicts, the scientist validates, and both improve in a [virtuous cycle](https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/how-pharma-is-rewriting-the-ai-playbook-perspectives-from-industry-leaders). Open Terminal makes that cycle accessible to any scientist who can describe what they need — no programming expertise required.
+
+<!-- TODO: Add screenshot of Open Terminal showing SAR heatmap and matched molecular pair analysis -->
+![Open Terminal with SAR heatmap and matched molecular pair analysis](images/terminal_sar_analysis.png)
+
+#### Detecting Safety Signals in Pharmacovigilance Data
+
+A pharmacovigilance scientist is running a routine disproportionality screen on the company's adverse event database. A new signal has appeared for a marketed product — a cluster of hepatic events that wasn't flagged in the clinical program. She needs to characterize it fast, before the next PSMF update. She exports the case-level data (MedDRA preferred terms, time-to-onset, seriousness criteria, reporter type, and co-suspect medications) from the safety database, uploads the CSV to Open Terminal, and types:
+
+*"Calculate the proportional reporting ratio (PRR) and reporting odds ratio (ROR) with 95% confidence intervals for all hepatic preferred terms in this dataset. Generate three visualizations: a forest plot of PRR values for all hepatic PTs that cross the signaling threshold (PRR ≥ 2, chi-squared ≥ 4, N ≥ 3), a time-to-onset histogram for the flagged events grouped by seriousness, and a bubble chart showing case volume by preferred term on the x-axis, PRR on the y-axis, and bubble size scaled to the proportion of serious cases."*
+
+The AI processes the dataset, runs the statistical calculations, and returns three publication-quality figures. The forest plot confirms that three hepatic PTs exceed the signaling threshold. The time-to-onset histogram shows a concentration in the first 90 days — suggesting a dose-dependent mechanism rather than idiosyncratic injury. The bubble chart gives the scientist an at-a-glance view of which terms carry the most signal weight. She downloads the figures, attaches them to a signal evaluation report, and has a preliminary assessment ready for the safety committee by end of day — work that would normally take a full analyst a week of back-and-forth with the biostatistics team.
+
+<!-- TODO: Add screenshot of Open Terminal showing PV signal detection forest plot and bubble chart -->
+![Open Terminal with pharmacovigilance signal detection visualizations](images/terminal_pv_signals.png)
+
+#### Building Regulatory Submission Visuals
+
+A regulatory operations lead is coordinating a rolling NDA submission. The publishing team needs a clear visual for internal stakeholders showing the submission architecture — which eCTD modules are complete, which are in review, which are blocked on pending data, and how the cross-references between sections are structured. He opens Open Terminal and types:
+
+*"From this submission tracker spreadsheet, create two visuals: First, a Gantt-style timeline chart showing each eCTD module (1 through 5) with sub-sections color-coded by status — green for finalized, yellow for in-review, red for blocked. Include a vertical 'today' line and the target submission date. Second, a dependency diagram showing the cross-reference relationships between Module 2.7 (Clinical Summary), Module 5.3 (Clinical Study Reports), and Module 2.5 (Clinical Overview) — draw directional arrows showing which sections reference which, and flag any referenced section that isn't yet finalized."*
+
+The AI parses the spreadsheet, generates a color-coded Gantt chart overlaid with milestone markers and a dependency graph with red-flagged nodes for incomplete cross-references. The regulatory lead immediately sees that Module 2.7 references three Module 5.3 study reports that are still in QC — a bottleneck that wasn't visible in the flat tracker. He shares the visuals in the publishing team's next standup, and they reprioritize QC accordingly.
+
+<!-- TODO: Add screenshot of Open Terminal showing eCTD Gantt chart and dependency diagram -->
+![Open Terminal with regulatory submission timeline and dependency diagram](images/terminal_regulatory_visuals.png)
 
 ---
 
