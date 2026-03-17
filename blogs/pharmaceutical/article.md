@@ -99,8 +99,7 @@ A pharmacovigilance scientist is running a routine disproportionality screen on 
 
 The AI processes the dataset, runs the statistical calculations, and returns three publication-quality figures. The forest plot confirms that three hepatic PTs exceed the signaling threshold. The time-to-onset histogram shows a concentration in the first 90 days — suggesting a dose-dependent mechanism rather than idiosyncratic injury. The bubble chart gives the scientist an at-a-glance view of which terms carry the most signal weight. She downloads the figures, attaches them to a signal evaluation report, and has a preliminary assessment ready for the safety committee by end of day — work that would normally take a full analyst a week of back-and-forth with the biostatistics team.
 
-<!-- TODO: Add screenshot of Open Terminal showing PV signal detection forest plot and bubble chart -->
-![Open Terminal with pharmacovigilance signal detection visualizations](images/terminal_pv_signals.png)
+![Open Terminal with pharmacovigilance signal detection visualizations](images/terminal_pv_signals.gif)
 
 #### Building Regulatory Submission Visuals
 
