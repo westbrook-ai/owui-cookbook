@@ -109,8 +109,7 @@ A regulatory operations lead is coordinating a rolling NDA submission. The publi
 
 The AI parses the spreadsheet, generates a color-coded Gantt chart overlaid with milestone markers and a dependency graph with red-flagged nodes for incomplete cross-references. The regulatory lead immediately sees that Module 2.7 references three Module 5.3 study reports that are still in QC — a bottleneck that wasn't visible in the flat tracker. He shares the visuals in the publishing team's next standup, and they reprioritize QC accordingly.
 
-<!-- TODO: Add screenshot of Open Terminal showing eCTD Gantt chart and dependency diagram -->
-![Open Terminal with regulatory submission timeline and dependency diagram](images/terminal_regulatory_visuals.png)
+![Open Terminal with regulatory submission timeline and dependency diagram](images/terminal_regulatory_visuals.gif)
 
 ---
 
