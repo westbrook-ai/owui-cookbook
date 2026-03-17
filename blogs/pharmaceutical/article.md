@@ -81,16 +81,15 @@ The AI reads the dataset, generates the four-panel figure, and returns it in the
 
 #### Accelerating Drug Discovery with SAR Visualization
 
-A medicinal chemist is deep in lead optimization. His team has synthesized 200+ analogs of a kinase inhibitor scaffold, and the SAR is getting complex — potency cliffs appear when certain R-groups are swapped, but nobody has mapped the full landscape systematically. He drags a compound library CSV (SMILES strings, IC50 values, selectivity ratios, and physicochemical descriptors) into the Open Terminal file browser and types:
+A medicinal chemist is deep in lead optimization. His team has synthesized 200+ analogs of a kinase inhibitor scaffold, and the SAR is getting complex — potency cliffs appear when certain R-groups are swapped, but nobody has mapped the full landscape systematically. He references a compound library CSV (SMILES strings, IC50 values, selectivity ratios, and physicochemical descriptors) from Knowledge, enables Open Terminal, and types:
 
 *"Using RDKit: compute Morgan fingerprints for these compounds, cluster them by Tanimoto similarity, and generate a heatmap showing the relationship between structural clusters and pIC50. Annotate the cluster with the best selectivity ratio. Add a second panel showing a matched molecular pair analysis for substitutions at the R1 position — plot the ΔpIC50 for each transformation as a horizontal bar chart, sorted by magnitude."*
 
 The AI installs RDKit and scikit-learn, calculates fingerprints, runs the clustering, identifies the matched pairs, and produces a two-panel figure: the SAR heatmap on top, the matched molecular pair bar chart below. The chemist spots a pattern — a fluorine-to-chlorine swap at R1 consistently boosts potency by ~0.5 log units without killing selectivity — and sends the figure to the project team with a follow-up synthesis proposal.
 
-This is what Genentech's John Marioni describes as a "lab-in-the-loop": the model predicts, the scientist validates, and both improve in a [virtuous cycle](https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/how-pharma-is-rewriting-the-ai-playbook-perspectives-from-industry-leaders). Open Terminal makes that cycle accessible to any scientist who can describe what they need — no programming expertise required.
-
-<!-- TODO: Add screenshot of Open Terminal showing SAR heatmap and matched molecular pair analysis -->
 ![Open Terminal with SAR heatmap and matched molecular pair analysis](images/terminal_sar_analysis.png)
+
+This is what Genentech's John Marioni describes as a "lab-in-the-loop": the model predicts, the scientist validates, and both improve in a [virtuous cycle](https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/how-pharma-is-rewriting-the-ai-playbook-perspectives-from-industry-leaders). Open Terminal makes that cycle accessible to any scientist who can describe what they need — no programming expertise required.
 
 #### Detecting Safety Signals in Pharmacovigilance Data
 
